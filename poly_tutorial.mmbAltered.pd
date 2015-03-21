@@ -1,0 +1,484 @@
+#N canvas 94 22 923 779 10;
+#X obj 402 447 pack f f f;
+#X floatatom 353 363 5 0 0 0 - - -;
+#X floatatom 353 383 5 0 0 0 - - -;
+#X floatatom 353 403 5 0 0 0 - - -;
+#X text 274 362 voice number;
+#X text 279 382 note number;
+#X text 295 402 velocity;
+#N canvas 0 22 1156 433 voice 0;
+#X obj 416 56 inlet;
+#X obj 416 91 unpack f f;
+#X obj 416 202 mtof;
+#X obj 416 277 osc~;
+#X obj 416 340 *~;
+#X obj 516 194 sel 0;
+#X floatatom 368 137 5 0 0 0 - - -;
+#X text 292 137 note number;
+#X floatatom 518 137 5 0 0 0 - - -;
+#X text 557 138 velocity;
+#X msg 518 241 0 100;
+#X obj 550 292 vline~;
+#X obj 416 385 outlet~;
+#X obj 473 385 outlet;
+#X obj 473 355 != 0;
+#X msg 579 242 0 \, 1 100;
+#X obj 416 247 vline~;
+#X text 52 238 Messages sent to audio inlets will only update at block
+boundaries. So \, if you use a [vline~] envelope (which updates between
+blocks) \, you'll want to use [vline~] to update the frequency as well.
+;
+#X text 569 193 zero velocity == noteoff;
+#X text 694 26 This is just a simple sinewave voice with an ASR envelope.
+Each voice is a copy of the same subpatch. You can \, of course \,
+use abstractions as well \, particularly if you want to use creations
+arguments or \$0. The right outlet sends out 1 if it is active and
+0 if it is not \, for illustrative purposes.;
+#X text 774 199 Everything inside a voice should be voice-specific
+\, such as individual oscillators \, amplitude envelopes \, filters
+\, etc. Anything that affects all voices \, like global LFOs \, filters
+\, and FX \, should be taken care of outside of the voice patches.
+;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 1 0 6 0;
+#X connect 1 1 5 0;
+#X connect 1 1 8 0;
+#X connect 1 1 14 0;
+#X connect 2 0 16 0;
+#X connect 3 0 4 0;
+#X connect 4 0 12 0;
+#X connect 5 0 10 0;
+#X connect 5 1 15 0;
+#X connect 10 0 11 0;
+#X connect 11 0 4 1;
+#X connect 14 0 13 0;
+#X connect 15 0 11 0;
+#X connect 16 0 3 0;
+#X restore 326 569 pd voice;
+#X obj 325 41 notein;
+#X msg 544 58 60 100;
+#X msg 544 98 64 100;
+#X msg 544 138 67 100;
+#X msg 544 178 71 100;
+#X msg 544 78 60 0;
+#X msg 544 118 64 0;
+#X msg 544 158 67 0;
+#X msg 544 198 71 0;
+#X text 125 38 MIDI note number and velocity...;
+#X text 432 37 ..or if you don't have a MIDI controller set up.;
+#X obj 371 593 tgl 15 0 empty empty 1 5 8 0 10 -262144 -1 -1 0 1;
+#X text 559 511 <-- sends the note number and velocity to the appropriate
+voice number.;
+#X obj 490 741 dac~;
+#X text 457 322 <-- first argument is the maximum number of voices.
+Giving 1 as the second argument activates voice-stealing.;
+#X msg 279 171 stop;
+#X text 54 170 send note-offs for all active voices;
+#X text 850 700 .mmb;
+#X obj 441 593 tgl 15 0 empty empty 2 5 8 0 10 -262144 -1 -1 0 1;
+#X obj 511 593 tgl 15 0 empty empty 3 5 8 0 10 -262144 -1 -1 0 1;
+#X obj 581 593 tgl 15 0 empty empty 4 5 8 0 10 -262144 -1 -1 0 1;
+#N canvas 0 22 1156 433 voice 0;
+#X obj 416 56 inlet;
+#X obj 416 91 unpack f f;
+#X obj 416 202 mtof;
+#X obj 416 277 osc~;
+#X obj 416 340 *~;
+#X obj 516 194 sel 0;
+#X floatatom 368 137 5 0 0 0 - - -;
+#X text 292 137 note number;
+#X floatatom 518 137 5 0 0 0 - - -;
+#X text 557 138 velocity;
+#X msg 518 241 0 100;
+#X obj 550 292 vline~;
+#X obj 416 385 outlet~;
+#X obj 473 385 outlet;
+#X obj 473 355 != 0;
+#X msg 579 242 0 \, 1 100;
+#X obj 416 247 vline~;
+#X text 52 238 Messages sent to audio inlets will only update at block
+boundaries. So \, if you use a [vline~] envelope (which updates between
+blocks) \, you'll want to use [vline~] to update the frequency as well.
+;
+#X text 569 193 zero velocity == noteoff;
+#X text 694 26 This is just a simple sinewave voice with an ASR envelope.
+Each voice is a copy of the same subpatch. You can \, of course \,
+use abstractions as well \, particularly if you want to use creations
+arguments or \$0. The right outlet sends out 1 if it is active and
+0 if it is not \, for illustrative purposes.;
+#X text 774 199 Everything inside a voice should be voice-specific
+\, such as individual oscillators \, amplitude envelopes \, filters
+\, etc. Anything that affects all voices \, like global LFOs \, filters
+\, and FX \, should be taken care of outside of the voice patches.
+;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 1 0 6 0;
+#X connect 1 1 5 0;
+#X connect 1 1 8 0;
+#X connect 1 1 14 0;
+#X connect 2 0 16 0;
+#X connect 3 0 4 0;
+#X connect 4 0 12 0;
+#X connect 5 0 10 0;
+#X connect 5 1 15 0;
+#X connect 10 0 11 0;
+#X connect 11 0 4 1;
+#X connect 14 0 13 0;
+#X connect 15 0 11 0;
+#X connect 16 0 3 0;
+#X restore 396 569 pd voice;
+#N canvas 0 22 1156 433 voice 0;
+#X obj 416 56 inlet;
+#X obj 416 91 unpack f f;
+#X obj 416 202 mtof;
+#X obj 416 277 osc~;
+#X obj 416 340 *~;
+#X obj 516 194 sel 0;
+#X floatatom 368 137 5 0 0 0 - - -;
+#X text 292 137 note number;
+#X floatatom 518 137 5 0 0 0 - - -;
+#X text 557 138 velocity;
+#X msg 518 241 0 100;
+#X obj 550 292 vline~;
+#X obj 416 385 outlet~;
+#X obj 473 385 outlet;
+#X obj 473 355 != 0;
+#X msg 579 242 0 \, 1 100;
+#X obj 416 247 vline~;
+#X text 52 238 Messages sent to audio inlets will only update at block
+boundaries. So \, if you use a [vline~] envelope (which updates between
+blocks) \, you'll want to use [vline~] to update the frequency as well.
+;
+#X text 569 193 zero velocity == noteoff;
+#X text 694 26 This is just a simple sinewave voice with an ASR envelope.
+Each voice is a copy of the same subpatch. You can \, of course \,
+use abstractions as well \, particularly if you want to use creations
+arguments or \$0. The right outlet sends out 1 if it is active and
+0 if it is not \, for illustrative purposes.;
+#X text 774 199 Everything inside a voice should be voice-specific
+\, such as individual oscillators \, amplitude envelopes \, filters
+\, etc. Anything that affects all voices \, like global LFOs \, filters
+\, and FX \, should be taken care of outside of the voice patches.
+;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 1 0 6 0;
+#X connect 1 1 5 0;
+#X connect 1 1 8 0;
+#X connect 1 1 14 0;
+#X connect 2 0 16 0;
+#X connect 3 0 4 0;
+#X connect 4 0 12 0;
+#X connect 5 0 10 0;
+#X connect 5 1 15 0;
+#X connect 10 0 11 0;
+#X connect 11 0 4 1;
+#X connect 14 0 13 0;
+#X connect 15 0 11 0;
+#X connect 16 0 3 0;
+#X restore 466 569 pd voice;
+#N canvas 0 22 1156 433 voice 0;
+#X obj 416 56 inlet;
+#X obj 416 91 unpack f f;
+#X obj 416 202 mtof;
+#X obj 416 277 osc~;
+#X obj 416 340 *~;
+#X obj 516 194 sel 0;
+#X floatatom 368 137 5 0 0 0 - - -;
+#X text 292 137 note number;
+#X floatatom 518 137 5 0 0 0 - - -;
+#X text 557 138 velocity;
+#X msg 518 241 0 100;
+#X obj 550 292 vline~;
+#X obj 416 385 outlet~;
+#X obj 473 385 outlet;
+#X obj 473 355 != 0;
+#X msg 579 242 0 \, 1 100;
+#X obj 416 247 vline~;
+#X text 52 238 Messages sent to audio inlets will only update at block
+boundaries. So \, if you use a [vline~] envelope (which updates between
+blocks) \, you'll want to use [vline~] to update the frequency as well.
+;
+#X text 569 193 zero velocity == noteoff;
+#X text 694 26 This is just a simple sinewave voice with an ASR envelope.
+Each voice is a copy of the same subpatch. You can \, of course \,
+use abstractions as well \, particularly if you want to use creations
+arguments or \$0. The right outlet sends out 1 if it is active and
+0 if it is not \, for illustrative purposes.;
+#X text 774 199 Everything inside a voice should be voice-specific
+\, such as individual oscillators \, amplitude envelopes \, filters
+\, etc. Anything that affects all voices \, like global LFOs \, filters
+\, and FX \, should be taken care of outside of the voice patches.
+;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 1 0 6 0;
+#X connect 1 1 5 0;
+#X connect 1 1 8 0;
+#X connect 1 1 14 0;
+#X connect 2 0 16 0;
+#X connect 3 0 4 0;
+#X connect 4 0 12 0;
+#X connect 5 0 10 0;
+#X connect 5 1 15 0;
+#X connect 10 0 11 0;
+#X connect 11 0 4 1;
+#X connect 14 0 13 0;
+#X connect 15 0 11 0;
+#X connect 16 0 3 0;
+#X restore 536 569 pd voice;
+#X text 57 569 Look inside [pd voice] for some extra tips.;
+#X obj 397 322 poly 8 1;
+#N canvas 0 22 1156 433 voice 0;
+#X obj 416 56 inlet;
+#X obj 416 91 unpack f f;
+#X obj 416 202 mtof;
+#X obj 416 277 osc~;
+#X obj 416 340 *~;
+#X obj 516 194 sel 0;
+#X floatatom 368 137 5 0 0 0 - - -;
+#X text 292 137 note number;
+#X floatatom 518 137 5 0 0 0 - - -;
+#X text 557 138 velocity;
+#X msg 518 241 0 100;
+#X obj 550 292 vline~;
+#X obj 416 385 outlet~;
+#X obj 473 385 outlet;
+#X obj 473 355 != 0;
+#X msg 579 242 0 \, 1 100;
+#X obj 416 247 vline~;
+#X text 52 238 Messages sent to audio inlets will only update at block
+boundaries. So \, if you use a [vline~] envelope (which updates between
+blocks) \, you'll want to use [vline~] to update the frequency as well.
+;
+#X text 569 193 zero velocity == noteoff;
+#X text 694 26 This is just a simple sinewave voice with an ASR envelope.
+Each voice is a copy of the same subpatch. You can \, of course \,
+use abstractions as well \, particularly if you want to use creations
+arguments or \$0. The right outlet sends out 1 if it is active and
+0 if it is not \, for illustrative purposes.;
+#X text 774 199 Everything inside a voice should be voice-specific
+\, such as individual oscillators \, amplitude envelopes \, filters
+\, etc. Anything that affects all voices \, like global LFOs \, filters
+\, and FX \, should be taken care of outside of the voice patches.
+;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 1 0 6 0;
+#X connect 1 1 5 0;
+#X connect 1 1 8 0;
+#X connect 1 1 14 0;
+#X connect 2 0 16 0;
+#X connect 3 0 4 0;
+#X connect 4 0 12 0;
+#X connect 5 0 10 0;
+#X connect 5 1 15 0;
+#X connect 10 0 11 0;
+#X connect 11 0 4 1;
+#X connect 14 0 13 0;
+#X connect 15 0 11 0;
+#X connect 16 0 3 0;
+#X restore 608 569 pd voice;
+#X obj 653 597 tgl 15 0 empty empty 5 5 8 0 10 -262144 -1 -1 0 1;
+#X text 359 571;
+#N canvas 0 22 1156 433 voice 0;
+#X obj 416 56 inlet;
+#X obj 416 91 unpack f f;
+#X obj 416 202 mtof;
+#X obj 416 277 osc~;
+#X obj 416 340 *~;
+#X obj 516 194 sel 0;
+#X floatatom 368 137 5 0 0 0 - - -;
+#X text 292 137 note number;
+#X floatatom 518 137 5 0 0 0 - - -;
+#X text 557 138 velocity;
+#X msg 518 241 0 100;
+#X obj 550 292 vline~;
+#X obj 416 385 outlet~;
+#X obj 473 385 outlet;
+#X obj 473 355 != 0;
+#X msg 579 242 0 \, 1 100;
+#X obj 416 247 vline~;
+#X text 52 238 Messages sent to audio inlets will only update at block
+boundaries. So \, if you use a [vline~] envelope (which updates between
+blocks) \, you'll want to use [vline~] to update the frequency as well.
+;
+#X text 569 193 zero velocity == noteoff;
+#X text 694 26 This is just a simple sinewave voice with an ASR envelope.
+Each voice is a copy of the same subpatch. You can \, of course \,
+use abstractions as well \, particularly if you want to use creations
+arguments or \$0. The right outlet sends out 1 if it is active and
+0 if it is not \, for illustrative purposes.;
+#X text 774 199 Everything inside a voice should be voice-specific
+\, such as individual oscillators \, amplitude envelopes \, filters
+\, etc. Anything that affects all voices \, like global LFOs \, filters
+\, and FX \, should be taken care of outside of the voice patches.
+;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 1 0 6 0;
+#X connect 1 1 5 0;
+#X connect 1 1 8 0;
+#X connect 1 1 14 0;
+#X connect 2 0 16 0;
+#X connect 3 0 4 0;
+#X connect 4 0 12 0;
+#X connect 5 0 10 0;
+#X connect 5 1 15 0;
+#X connect 10 0 11 0;
+#X connect 11 0 4 1;
+#X connect 14 0 13 0;
+#X connect 15 0 11 0;
+#X connect 16 0 3 0;
+#X restore 676 569 pd voice;
+#X obj 721 594 tgl 15 0 empty empty 6 5 8 0 10 -262144 -1 -1 0 1;
+#N canvas 0 22 1156 433 voice 0;
+#X obj 416 56 inlet;
+#X obj 416 91 unpack f f;
+#X obj 416 202 mtof;
+#X obj 416 277 osc~;
+#X obj 416 340 *~;
+#X obj 516 194 sel 0;
+#X floatatom 368 137 5 0 0 0 - - -;
+#X text 292 137 note number;
+#X floatatom 518 137 5 0 0 0 - - -;
+#X text 557 138 velocity;
+#X msg 518 241 0 100;
+#X obj 550 292 vline~;
+#X obj 416 385 outlet~;
+#X obj 473 385 outlet;
+#X obj 473 355 != 0;
+#X msg 579 242 0 \, 1 100;
+#X obj 416 247 vline~;
+#X text 52 238 Messages sent to audio inlets will only update at block
+boundaries. So \, if you use a [vline~] envelope (which updates between
+blocks) \, you'll want to use [vline~] to update the frequency as well.
+;
+#X text 569 193 zero velocity == noteoff;
+#X text 694 26 This is just a simple sinewave voice with an ASR envelope.
+Each voice is a copy of the same subpatch. You can \, of course \,
+use abstractions as well \, particularly if you want to use creations
+arguments or \$0. The right outlet sends out 1 if it is active and
+0 if it is not \, for illustrative purposes.;
+#X text 774 199 Everything inside a voice should be voice-specific
+\, such as individual oscillators \, amplitude envelopes \, filters
+\, etc. Anything that affects all voices \, like global LFOs \, filters
+\, and FX \, should be taken care of outside of the voice patches.
+;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 1 0 6 0;
+#X connect 1 1 5 0;
+#X connect 1 1 8 0;
+#X connect 1 1 14 0;
+#X connect 2 0 16 0;
+#X connect 3 0 4 0;
+#X connect 4 0 12 0;
+#X connect 5 0 10 0;
+#X connect 5 1 15 0;
+#X connect 10 0 11 0;
+#X connect 11 0 4 1;
+#X connect 14 0 13 0;
+#X connect 15 0 11 0;
+#X connect 16 0 3 0;
+#X restore 744 571 pd voice;
+#X obj 789 598 tgl 15 0 empty empty 7 5 8 0 10 -262144 -1 -1 0 1;
+#N canvas 0 22 1156 433 voice 0;
+#X obj 416 56 inlet;
+#X obj 416 91 unpack f f;
+#X obj 416 202 mtof;
+#X obj 416 277 osc~;
+#X obj 416 340 *~;
+#X obj 516 194 sel 0;
+#X floatatom 368 137 5 0 0 0 - - -;
+#X text 292 137 note number;
+#X floatatom 518 137 5 0 0 0 - - -;
+#X text 557 138 velocity;
+#X msg 518 241 0 100;
+#X obj 550 292 vline~;
+#X obj 416 385 outlet~;
+#X obj 473 385 outlet;
+#X obj 473 355 != 0;
+#X msg 579 242 0 \, 1 100;
+#X obj 416 247 vline~;
+#X text 52 238 Messages sent to audio inlets will only update at block
+boundaries. So \, if you use a [vline~] envelope (which updates between
+blocks) \, you'll want to use [vline~] to update the frequency as well.
+;
+#X text 569 193 zero velocity == noteoff;
+#X text 694 26 This is just a simple sinewave voice with an ASR envelope.
+Each voice is a copy of the same subpatch. You can \, of course \,
+use abstractions as well \, particularly if you want to use creations
+arguments or \$0. The right outlet sends out 1 if it is active and
+0 if it is not \, for illustrative purposes.;
+#X text 774 199 Everything inside a voice should be voice-specific
+\, such as individual oscillators \, amplitude envelopes \, filters
+\, etc. Anything that affects all voices \, like global LFOs \, filters
+\, and FX \, should be taken care of outside of the voice patches.
+;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 1 0 6 0;
+#X connect 1 1 5 0;
+#X connect 1 1 8 0;
+#X connect 1 1 14 0;
+#X connect 2 0 16 0;
+#X connect 3 0 4 0;
+#X connect 4 0 12 0;
+#X connect 5 0 10 0;
+#X connect 5 1 15 0;
+#X connect 10 0 11 0;
+#X connect 11 0 4 1;
+#X connect 14 0 13 0;
+#X connect 15 0 11 0;
+#X connect 16 0 3 0;
+#X restore 807 571 pd voice;
+#X obj 847 597 tgl 15 0 empty empty 8 5 8 0 10 -262144 -1 -1 0 1;
+#X obj 490 692 *~ 0.125;
+#X obj 407 489 route 1 2 3 4 5 6 7 8;
+#X connect 0 0 44 0;
+#X connect 7 0 43 0;
+#X connect 7 1 19 0;
+#X connect 8 0 33 0;
+#X connect 8 1 33 1;
+#X connect 9 0 33 0;
+#X connect 10 0 33 0;
+#X connect 11 0 33 0;
+#X connect 12 0 33 0;
+#X connect 13 0 33 0;
+#X connect 14 0 33 0;
+#X connect 15 0 33 0;
+#X connect 16 0 33 0;
+#X connect 23 0 33 0;
+#X connect 29 0 43 0;
+#X connect 29 1 26 0;
+#X connect 30 0 43 0;
+#X connect 30 1 27 0;
+#X connect 31 0 43 0;
+#X connect 31 1 28 0;
+#X connect 33 0 0 0;
+#X connect 33 0 1 0;
+#X connect 33 1 0 1;
+#X connect 33 1 2 0;
+#X connect 33 2 0 2;
+#X connect 33 2 3 0;
+#X connect 34 0 43 0;
+#X connect 34 1 35 0;
+#X connect 37 0 43 0;
+#X connect 37 1 38 0;
+#X connect 39 0 43 0;
+#X connect 39 1 40 0;
+#X connect 41 0 43 0;
+#X connect 41 1 42 0;
+#X connect 43 0 21 0;
+#X connect 43 0 21 1;
+#X connect 44 0 7 0;
+#X connect 44 1 29 0;
+#X connect 44 2 30 0;
+#X connect 44 3 31 0;
+#X connect 44 4 34 0;
+#X connect 44 5 37 0;
+#X connect 44 6 39 0;
+#X connect 44 7 41 0;
